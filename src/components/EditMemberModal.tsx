@@ -34,13 +34,11 @@ export const EditMemberModal: FC<EditMemberModalProps> = ({ open, onClose, membe
         <DialogHeader>
           <DialogTitle>Edit Member</DialogTitle>
         </DialogHeader>
-        <div className="space-y-4">
           <Input
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Name"
           />
-        </div>
         <DialogFooter>
           <Button onClick={save}>Save</Button>
         </DialogFooter>

@@ -1,12 +1,6 @@
+import { Member } from '@/types/memberInterfaces';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-
-type Member = {
-  id: string;
-  name: string;
-  role: string;
-  parentId?: string;
-};
 
 type TeamState = {
   members: Member[];
