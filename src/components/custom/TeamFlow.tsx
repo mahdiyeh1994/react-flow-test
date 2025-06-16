@@ -12,9 +12,9 @@ import {
 } from "@xyflow/react";
 import { v4 as uuid } from "uuid";
 import { useTeamStore } from "src/store/teamStore";
-import { EditMemberModal } from "./EditMemberModal";
 import { sampleMembers } from "@/lib/data";
 import { Member } from "@/types/memberInterfaces";
+import { EditMemberModal } from "./EditMemberModal";
 
 interface NodeData extends Record<string, unknown> {
   label: JSX.Element;
@@ -29,7 +29,7 @@ interface ModalState {
 export const TeamFlow: FC = () => {
   const { members, addMember } = useTeamStore();
   const [modal, setModal] = useState<ModalState>({ open: false, id: null });
-  const [nodes, setNodes, onNodesChange] = useNodesState(
+  const [nodes, setNodes, onNodesChange] = useNodesState<FlowNode>(
     members.map((m) => ({
       id: m.id,
       data: {
@@ -38,7 +38,7 @@ export const TeamFlow: FC = () => {
       position: { x: Math.random() * 400, y: Math.random() * 400 },
     }))
   );
-const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   // Update node labels when members change without affecting position
   useEffect(() => {
     setNodes((current) =>
@@ -48,6 +48,8 @@ const [edges, setEdges, onEdgesChange] = useEdgesState([]);
       })
     );
   }, [members]);
+
+  // Render nodes with style
   function renderLabel(member: { id: string; name: string; role: string }) {
     return (
       <div
@@ -59,30 +61,43 @@ const [edges, setEdges, onEdgesChange] = useEdgesState([]);
       </div>
     );
   }
-  const onConnect = useCallback((params: FlowEdge | Connection) => setEdges((eds) => addEdge(params, eds)), []);
+  const onConnect = useCallback(
+    (params: FlowEdge | Connection) => setEdges((eds) => addEdge(params, eds)),
+    []
+  );
 
   const onNodeClick = (id: string) => setModal({ open: true, id });
 
   // Drag-and-drop from sidebar
-  const onDragStart = (event: React.DragEvent, member: Omit<Member, 'id'>) => {
-    event.dataTransfer.setData('application/reactflow', JSON.stringify(member));
-    event.dataTransfer.effectAllowed = 'move';
+  const onDragStart = (event: React.DragEvent, member: Omit<Member, "id">) => {
+    event.dataTransfer.setData("application/reactflow", JSON.stringify(member));
+    event.dataTransfer.effectAllowed = "move";
   };
-   // Drop handler: parse sample, assign id, store
-  const onDrop = useCallback((event: DragEvent) => {
-    event.preventDefault();
-    const data = event.dataTransfer.getData('application/reactflow');
-    if (!data) return;
-    const { name, role } = JSON.parse(data);
-    const id = uuid();
-    const newMember: Member = { id, name, role };
-    addMember(newMember);
-    setNodes((ns) => [...ns, { id, data: { label: renderLabel(newMember) }, position: { x: event.clientX, y: event.clientY } }]);
-  }, [addMember]);
+  // Drop handler: parse sample, assign id, store
+  const onDrop = useCallback(
+    (event: DragEvent) => {
+      event.preventDefault();
+      const data = event.dataTransfer.getData("application/reactflow");
+      if (!data) return;
+      const { name, role } = JSON.parse(data);
+      const id = uuid();
+      const newMember: Member = { id, name, role };
+      addMember(newMember);
+      setNodes((ns) => [
+        ...ns,
+        {
+          id,
+          data: { label: renderLabel(newMember) },
+          position: { x: event.clientX, y: event.clientY },
+        },
+      ]);
+    },
+    [addMember]
+  );
 
-    const onDragOver = useCallback((event: DragEvent) => {
+  const onDragOver = useCallback((event: DragEvent) => {
     event.preventDefault();
-    event.dataTransfer.dropEffect = 'move';
+    event.dataTransfer.dropEffect = "move";
   }, []);
 
   return (
@@ -103,7 +118,7 @@ const [edges, setEdges, onEdgesChange] = useEdgesState([]);
       </ReactFlow>
       {/* Sidebar */}
       <div className="w-1/6 h-full  p-4 bg-gray-50 border-r space-y-2">
-        {sampleMembers.map((sm,index) => (
+        {sampleMembers.map((sm, index) => (
           <div
             key={index}
             className="p-2 bg-white border rounded cursor-move"

@@ -13,7 +13,7 @@ export const useTeamStore = create<TeamState>()(
     (set) => ({
       members: [
         { id: '1', name: 'Alice', role: 'Manager' },
-        { id: '2', name: 'Bob', role: 'Developer', parentId: '1' },
+        { id: '2', name: 'Bob', role: 'Developer' },
       ],
       addMember: (member:Member) => set((state: { members: Member[] }) => ({ members: [...state.members, member] })),
       updateMember: (id: string, data: Partial<Member>) =>
