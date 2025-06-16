@@ -1,54 +1,64 @@
-![](https://github.com/xyflow/web/blob/main/assets/codesandbox-header-ts.png?raw=true)
+# Team Members Flow
 
-# React Flow starter (Vite + TS)
+A dynamic React application for visualizing and managing team structures using React Flow, Zustand, Tailwind CSS, and shadcn UI components.
 
-We've put together this template to serve as a starting point for folks
-interested in React Flow. You can use this both as a base for your own React
-Flow applications, or for small experiments or bug reports.
+## Tech Stack
 
-**TypeScript not your thing?** We also have a vanilla JavaScript starter template,
-just for you!
+- [React](https://reactjs.org/) — UI library
+- [@xyflow/react](https://github.com/xyflow/react) — React Flow renderer
+- [Zustand](https://github.com/pmndrs/zustand) — State management
+- [Tailwind CSS](https://tailwindcss.com/) — Utility-first CSS framework
+- [shadcn/ui](https://ui.shadcn.com/) — Accessible UI components (Dialog, Button, Input)
+- [UUID](https://github.com/uuidjs/uuid) — Unique ID generation
 
-## Getting up and running
+## Installation
 
-You can get this template without forking/cloning the repo using `degit`:
+1. **Clone the repository**
 
-```bash
-npx degit xyflow/vite-react-flow-template your-app-name
+   ```bash
+   git clone <repository-url>
+   cd <repository-folder>
+   ```
+
+2. **Install dependencies**
+
+   ```bash
+   npm install
+   ```
+4. **Start the development server**
+
+   ```bash
+   npm run dev
+   ```
+
+## Usage
+
+- **Add Nodes**: Drag a sample member from the left sidebar and drop onto the canvas.
+- **Connect Nodes**: Hover over a node, drag the connector handle to another node to link reporting lines.
+- **Edit Member**: Click any node to open a modal and update the name.
+
+## Project Structure
+
+```
+src/
+├── components/
+│   ├── custom/
+│   │   ├── EditMemberModal.tsx    # Modal dialog for editing
+│   │   └── TeamFlow.tsx           # Main flow and sidebar
+│   └── ui/
+│       ├── button.tsx            # Shadcn Button component
+│       ├── dialog.tsx            # Shadcn Dialog component
+│       └── input.tsx             # Shadcn Input component
+├── lib/
+│   ├── data.ts                   # Sample data definitions
+│   └── utils.ts                  # Utility functions
+├── store/
+│   └── teamStore.ts              # Zustand store with persistence
+├── types/
+│   └── memberInterfaces.ts       # TypeScript interfaces for members
+├── App.tsx                       # Entry point rendering TeamFlow
+├── main.tsx                      # ReactDOM bootstrap
+└── index.css                     # Tailwind directives
 ```
 
-The template contains mostly the minimum dependencies to get up and running, but
-also includes eslint and some additional rules to help you write React code that
-is less likely to run into issues:
 
-```bash
-npm install # or `pnpm install` or `yarn install`
-```
-
-Vite is a great development server and build tool that we recommend our users to
-use. You can start a development server with:
-
-```bash
-npm run dev
-```
-
-While the development server is running, changes you make to the code will be
-automatically reflected in the browser!
-
-## Things to try:
-
-- Create a new custom node inside `src/nodes/` (don't forget to export it from `src/nodes/index.ts`).
-- Change how things look by [overriding some of the built-in classes](https://reactflow.dev/learn/customization/theming#overriding-built-in-classes).
-- Add a layouting library to [position your nodes automatically](https://reactflow.dev/learn/layouting/layouting)
-
-## Resources
-
-Links:
-
-- [React Flow - Docs](https://reactflow.dev)
-- [React Flow - Discord](https://discord.com/invite/Bqt6xrs)
-
-Learn:
-
-- [React Flow – Custom Nodes](https://reactflow.dev/learn/customization/custom-nodes)
-- [React Flow – Layouting](https://reactflow.dev/learn/layouting/layouting)
