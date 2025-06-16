@@ -5,6 +5,7 @@ A dynamic React application for visualizing and managing team structures using R
 ## Tech Stack
 
 - [React](https://reactjs.org/) — UI library
+- [Vite](https://vitejs.dev/) — Build tool and development server
 - [@xyflow/react](https://github.com/xyflow/react) — React Flow renderer
 - [Zustand](https://github.com/pmndrs/zustand) — State management
 - [Tailwind CSS](https://tailwindcss.com/) — Utility-first CSS framework
